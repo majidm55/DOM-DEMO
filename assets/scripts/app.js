@@ -9,18 +9,29 @@ const userInputs = modal.querySelectorAll('input');
 const movies = [];
 
 const addMovieHandler = () => {
-  const title = userInputs[0].value;
-  const imageUrl = userInputs[1].value;
-  const rating = userInputs[2].value;
+  const titleValue = userInputs[0].value;
+  const imageUrlValue = userInputs[1].value;
+  const ratingValue = userInputs[2].value;
 
-  if(title.trim() === '' || 
-  imageUrl.trim() === '' || 
-  rating.trim() === '' || 
-  +rating < 1 || +rating > 5
+  if(titleValue.trim() === '' || 
+  imageUrlValue.trim() === '' || 
+  ratingValue.trim() === '' || 
+  +ratingValue < 1 || +ratingValue > 5
   ) {
     alert('Please enter valid values (rating between 1 and 5).');
     return;
   }
+
+  const newMovie = {
+    title: titleValue,
+    imageUrl: imageUrlValue,
+    rating: ratingValue
+  };
+
+  movies.push(newMovie);
+  console.log(movies);
+  toggleModal();
+  clearInput();
 };
 
 // let addMovieInfo = {
@@ -34,8 +45,15 @@ const toggleModal = () => {
   toggleBackdrop();
 };
 
+const clearInput = () => {
+  for (const input of userInputs) {
+    input.value = '';
+  }
+}
+
 const cancelAddMovieHandler = () => {
   toggleModal();
+  clearInput();
 };
 
 const backdropClickHandler = () => {
