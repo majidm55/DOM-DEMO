@@ -56,6 +56,7 @@ const deleteMovie = (movieId) => {
     listRoot.children[movieIndex].remove();
     // listRoot.removeChild(listRoot.children[movieIndex]);
     closeMovieDeletionModal();
+    updateUI();
     localStorage.setItem('movies', JSON.stringify(moviesArr));
 
 };
@@ -70,7 +71,7 @@ const deleteMovieHandler = (movieId) => {
 
   confirmDelBtn.replaceWith(confirmDelBtn.cloneNode(true));
   confirmDelBtn = removeMovie.querySelector('.btn--danger');
-  
+
   cancelDeletionBtn.removeEventListener('click', closeMovieDeletionModal);
 
   cancelDeletionBtn.addEventListener('click', closeMovieDeletionModal);
