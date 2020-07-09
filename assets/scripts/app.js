@@ -6,10 +6,26 @@ const addMovieBtn = cancelAddMovieBtn.nextElementSibling;
 const userInputs = modal.querySelectorAll('input');
 const entryText = document.getElementById('entry-text');
 
-const movies = [];
+let moviesArr;
+if (localStorage.getItem('movies')) {
+  moviesArr = JSON.parse(localStorage.getItem('movies'))
+} else {
+  moviesArr = [];
+}
+
+localStorage.setItem('movies', JSON.stringify(moviesArr));
+const data = JSON.parse(localStorage.getItem('movies'));
+
+window.addEventListener('load', () => {
+  if(data) {
+    data.forEach(item => {
+      renderNewMovie(item.title, item.imageUrl, item.rating);
+    });
+  }
+});
 
 const updateUI = () => {
-  if(movies.length === 0 ) {
+  if(moviesArr.length === 0 ) {
     entryText.style.display = 'block';
   } else {
     entryText.style.display = 'none';
@@ -34,6 +50,7 @@ const renderNewMovie = (title, imageUrl, rating) => {
   listRoot.append(newElMovie);
 };
 
+
 const addMovieHandler = () => {
   const titleValue = userInputs[0].value;
   const imageUrlValue = userInputs[1].value;
@@ -54,8 +71,10 @@ const addMovieHandler = () => {
     rating: ratingValue
   };
 
-  movies.push(newMovie);
-  console.log(movies);
+  moviesArr.push(newMovie);
+  localStorage.setItem('movies', JSON.stringify(moviesArr));
+
+  console.log(moviesArr);
   toggleModal();
   clearInput();
   updateUI();
